@@ -67,7 +67,9 @@ export function calcProbationEnd(startDateISO, duration) {
   if (duration.type === "custom") {
     return toDate(duration.customEndDate);
   }
-  const months = duration.type === "6_months" ? 6 : 3;
+  // const months = duration.type === "6_months" ? 6 : 3;
+  const monthsByType = { "1_month": 1,"2_month": 2, "3_months": 3, "6_months": 6 };
+const months = monthsByType[duration.type] ?? 3;
   return addMonths(startDateISO, months);
 }
 
