@@ -84,6 +84,8 @@ export default function AddEmployee() {
           <label className={`field ${errors.probationCustomEndDate ? "field--error" : ""}`}>
             <span className="field__label">{t("probationPeriod")}</span>
             <select value={form.probationType} onChange={(e) => update("probationType", e.target.value)}>
+              <option value="1_month">{t("oneMonth")}</option>
+              <option value="2_month">{t("twoMonth")}</option>
               <option value="3_months">{t("threeMonths")}</option>
               <option value="6_months">{t("sixMonths")}</option>
               <option value="custom">{t("custom")}</option>
