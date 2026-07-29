@@ -44,11 +44,18 @@ html, body, #root {
   height: 100%;
 }
 
+html {
+  background-color: var(--bg);
+}
+
 body {
   margin: 0;
-  background: var(--bg);
+  background-color: var(--bg);
   background-image:
-    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(212, 162, 76, 0.07), transparent);
+    radial-gradient(1100px 500px at 50% 0%, rgba(212, 162, 76, 0.07), transparent 70%);
+  background-repeat: no-repeat;
+  background-position: top center;
+  background-attachment: fixed;
   color: var(--text);
   font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;

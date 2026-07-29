@@ -54,9 +54,8 @@ export default function PostProbationChecklist({ employee, onChanged }) {
       {/* Uniform */}
       <ChecklistItem
         label={t("uniform")}
-        checked={local.uniformRequired ? local.uniformProvided : true}
-        toggleLabel={local.uniformRequired ? undefined : t("uniformNotRequired")}
-        disabled={!local.uniformRequired}
+        checked={local.uniformProvided}
+        notRequired={!local.uniformRequired}
         onToggle={(v) => patch({ uniformProvided: v, uniformDate: v ? todayISO() : null })}
         headerExtra={
           <label className="checklist__required-toggle">
@@ -96,8 +95,8 @@ export default function PostProbationChecklist({ employee, onChanged }) {
       {/* Locker */}
       <ChecklistItem
         label={t("locker")}
-        checked={local.lockerRequired ? local.lockerAssigned : true}
-        disabled={!local.lockerRequired}
+        checked={local.lockerAssigned}
+        notRequired={!local.lockerRequired}
         onToggle={(v) => patch({ lockerAssigned: v, lockerDate: v ? todayISO() : null })}
         headerExtra={
           <label className="checklist__required-toggle">
@@ -139,23 +138,25 @@ export default function PostProbationChecklist({ employee, onChanged }) {
   );
 }
 
-function ChecklistItem({ label, checked, onToggle, disabled, headerExtra, toggleLabel, children }) {
+function ChecklistItem({ label, checked, onToggle, notRequired, headerExtra, children }) {
+  const { t } = useLanguage();
   return (
-    <div className={`checklist-item ${checked ? "checklist-item--done" : ""}`}>
+    <div className={`checklist-item ${checked || notRequired ? "checklist-item--done" : ""}`}>
       <div className="checklist-item__row">
-        <label className="checklist-item__toggle">
-          <input
-            type="checkbox"
-            checked={!!checked}
-            disabled={disabled}
-            onChange={(e) => onToggle(e.target.checked)}
-          />
-          <span>{label}</span>
-        </label>
+        {notRequired ? (
+          <span className="checklist-item__toggle checklist-item__toggle--na">
+            <span className="checklist-item__na-pill">{t("uniformNotRequired")}</span>
+            <span>{label}</span>
+          </span>
+        ) : (
+          <label className="checklist-item__toggle">
+            <input type="checkbox" checked={!!checked} onChange={(e) => onToggle(e.target.checked)} />
+            <span>{label}</span>
+          </label>
+        )}
         {headerExtra}
       </div>
-      {toggleLabel && <span className="checklist-item__note">{toggleLabel}</span>}
-      {children && <div className="checklist-item__extra">{children}</div>}
+      {!notRequired && children && <div className="checklist-item__extra">{children}</div>}
     </div>
   );
 }
