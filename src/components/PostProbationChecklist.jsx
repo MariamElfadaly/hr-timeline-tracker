@@ -123,14 +123,14 @@ export default function PostProbationChecklist({ employee, onChanged }) {
       <ChecklistItem
         label={t("payrollCard")}
         checked={local.payrollCardIssued}
-        onToggle={(v) => patch({ payrollCardIssued: v })}
+        onToggle={(v) => patch({ payrollCardIssued: v, payrollCardDate: v ? todayISO() : null })}
       />
 
       {/* EMP FILE */}
       <ChecklistItem
         label={t("empFile")}
         checked={local.empFileCompleted}
-        onToggle={(v) => patch({ empFileCompleted: v })}
+        onToggle={(v) => patch({ empFileCompleted: v, empFileDate: v ? todayISO() : null })}
       />
 
       {savingKey && <div className="checklist__saving">{t("saving")}</div>}

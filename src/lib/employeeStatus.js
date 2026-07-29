@@ -42,7 +42,10 @@ export function getNextAction(employee, t) {
 
   if (status === "probation") {
     const p = getProbationInfo(employee);
-    return { text: `${p.daysRemaining} ${t("daysRemaining")}`, urgent: p.daysRemaining <= 7 };
+    if (p.daysRemaining <= 7) {
+      return { text: t("decideSoonShort", { days: p.daysRemaining }), urgent: true };
+    }
+    return { text: `${p.daysRemaining} ${t("daysRemaining")}`, urgent: false };
   }
 
   if (status === "active") {

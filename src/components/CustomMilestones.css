@@ -1,0 +1,88 @@
+.milestones {
+  background: var(--surface);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-lg);
+  padding: 22px 24px;
+  margin-bottom: 16px;
+}
+
+.milestones__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.milestones__title {
+  font-family: var(--font-display);
+  font-size: 17px;
+  font-weight: 600;
+}
+
+.milestones__add-btn {
+  padding: 7px 14px;
+  font-size: 13px;
+}
+
+.milestones__empty {
+  color: var(--text-faint);
+  font-size: 13px;
+  margin: 12px 0 0;
+}
+
+.milestones__list {
+  margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.milestones__item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--surface-raised);
+  border-radius: var(--radius-sm);
+  padding: 10px 14px;
+}
+
+.milestones__item-label {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.milestones__item-date {
+  font-size: 12px;
+  color: var(--text-faint);
+  font-family: var(--font-mono);
+  margin-top: 2px;
+}
+
+.milestones__delete {
+  background: none;
+  border: none;
+  color: var(--text-faint);
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 4px 8px;
+}
+
+.milestones__delete:hover {
+  color: var(--red);
+}
+
+.milestones__form {
+  margin-top: 18px;
+  padding-top: 18px;
+  border-top: 1px solid var(--border-soft);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.milestones__offsets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 6px;
+}

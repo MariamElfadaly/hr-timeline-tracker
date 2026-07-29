@@ -1,4 +1,5 @@
 import { deriveStatus, getProbationInfo, isChecklistComplete } from "./employeeStatus";
+import { totalDaysBetween } from "./dateUtils";
 
 /**
  * Builds the full reminders list for the employer, computed fresh from
@@ -35,14 +36,17 @@ export function buildReminders(employees, t) {
     if (status === "probation") {
       const p = getProbationInfo(emp);
       if (p.daysRemaining <= 30) {
+        const urgent = p.daysRemaining <= 7;
         items.push({
           id: `${emp.id}-probation`,
           employeeId: emp.id,
           employeeName: emp.name,
-          severity: p.daysRemaining <= 7 ? "high" : "medium",
+          severity: urgent ? "high" : "medium",
           text:
             p.daysRemaining === 0
-              ? t("reminderProbationEndsToday")
+              ? t("reminderProbationDecideToday")
+              : urgent
+              ? t("reminderProbationDecideSoon", { days: p.daysRemaining })
               : t("reminderProbationEndsIn", { days: p.daysRemaining }),
         });
       }
@@ -63,6 +67,25 @@ export function buildReminders(employees, t) {
           employeeName: emp.name,
           severity: "low",
           text: t("reminderChecklistMissing", { items: missing.join(", ") }),
+        });
+      }
+    }
+
+    for (const m of emp.milestones || []) {
+      const daysAway = totalDaysBetween(new Date(), m.date);
+      const offsets = m.reminderOffsets && m.reminderOffsets.length > 0 ? m.reminderOffsets : [30, 14, 7, 1, 0];
+      const maxOffset = Math.max(...offsets);
+      if (daysAway <= maxOffset) {
+        const label = m.type === "other" ? m.customLabel : t(`milestoneType_${m.type}`);
+        items.push({
+          id: `${emp.id}-milestone-${m.id}`,
+          employeeId: emp.id,
+          employeeName: emp.name,
+          severity: daysAway <= 7 ? "high" : daysAway <= 14 ? "medium" : "low",
+          text:
+            daysAway <= 0
+              ? t("reminderMilestoneToday", { label })
+              : t("reminderMilestoneIn", { label, days: daysAway }),
         });
       }
     }

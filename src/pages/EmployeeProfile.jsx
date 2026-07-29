@@ -8,6 +8,8 @@ import EmployeeCounter from "../components/EmployeeCounter";
 import StatusBadge from "../components/StatusBadge";
 import ProbationActionRequired from "../components/ProbationActionRequired";
 import PostProbationChecklist from "../components/PostProbationChecklist";
+import EmployeeTimeline from "../components/EmployeeTimeline";
+import CustomMilestones from "../components/CustomMilestones";
 import "./EmployeeProfile.css";
 
 export default function EmployeeProfile() {
@@ -70,6 +72,13 @@ export default function EmployeeProfile() {
           <div className="profile-page__progress">
             <div className="profile-page__progress-fill" style={{ width: `${probation.percent}%` }} />
           </div>
+          {probation.daysRemaining <= 7 && (
+            <div className="profile-page__decide-soon">
+              {probation.daysRemaining === 0
+                ? t("reminderProbationDecideToday")
+                : t("reminderProbationDecideSoon", { days: probation.daysRemaining })}
+            </div>
+          )}
         </div>
       )}
 
@@ -92,6 +101,10 @@ export default function EmployeeProfile() {
       {status === "active" && employee.checklist && (
         <PostProbationChecklist employee={employee} onChanged={refetch} />
       )}
+
+      <EmployeeTimeline employee={employee} />
+
+      <CustomMilestones employee={employee} onChanged={refetch} />
 
       <div className="profile-page__details">
         <DetailRow label={t("employeeId")} value={employee.employeeId} />

@@ -85,6 +85,15 @@
   border-radius: 999px;
 }
 
+.profile-page__decide-soon {
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(212, 162, 76, 0.25);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--brass);
+}
+
 .profile-page__details {
   background: var(--surface);
   border: 1px solid var(--border-soft);

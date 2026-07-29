@@ -106,7 +106,9 @@ const DEFAULT_CHECKLIST = {
   lockerDate: null,
 
   payrollCardIssued: false,
+  payrollCardDate: null,
   empFileCompleted: false,
+  empFileDate: null,
 };
 
 export async function confirmEmployee(userId, employeeId, confirmDate) {
@@ -155,4 +157,33 @@ export async function updateChecklist(userId, employeeId, checklistPatch) {
   const emp = await getEmployee(userId, employeeId);
   const merged = { ...DEFAULT_CHECKLIST, ...(emp?.checklist || {}), ...checklistPatch };
   await updateEmployee(userId, employeeId, { checklist: merged });
+}
+
+function makeId() {
+  return `${Date.now().toString(36)}${Math.random().toString(36).slice(2, 8)}`;
+}
+
+/**
+ * input: { type, customLabel, date (ISO), reminderOffsets: number[], note }
+ */
+export async function addMilestone(userId, employeeId, input) {
+  const emp = await getEmployee(userId, employeeId);
+  const milestones = emp?.milestones || [];
+  const milestone = {
+    id: makeId(),
+    type: input.type,
+    customLabel: input.type === "other" ? input.customLabel?.trim() || "" : "",
+    date: input.date,
+    reminderOffsets: input.reminderOffsets || [30, 14, 7, 1, 0],
+    note: input.note?.trim() || null,
+    createdAt: new Date().toISOString(),
+  };
+  await updateEmployee(userId, employeeId, { milestones: [...milestones, milestone] });
+  return milestone.id;
+}
+
+export async function deleteMilestone(userId, employeeId, milestoneId) {
+  const emp = await getEmployee(userId, employeeId);
+  const milestones = (emp?.milestones || []).filter((m) => m.id !== milestoneId);
+  await updateEmployee(userId, employeeId, { milestones });
 }
