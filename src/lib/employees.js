@@ -87,3 +87,72 @@ export async function updateEmployee(userId, employeeId, patch) {
     updatedAt: serverTimestamp(),
   });
 }
+
+const DEFAULT_CHECKLIST = {
+  idIssued: false,
+  idNumber: "",
+  idIssueDate: null,
+
+  uniformRequired: false,
+  uniformProvided: false,
+  uniformType: "",
+  uniformQuantity: "",
+  uniformSize: "",
+  uniformDate: null,
+
+  lockerRequired: false,
+  lockerAssigned: false,
+  lockerNumber: "",
+  lockerDate: null,
+
+  payrollCardIssued: false,
+  empFileCompleted: false,
+};
+
+export async function confirmEmployee(userId, employeeId, confirmDate) {
+  await updateEmployee(userId, employeeId, {
+    status: "active",
+    "probation.decision": { type: "confirmed", date: confirmDate },
+    confirmation: { confirmedDate: confirmDate },
+    checklist: DEFAULT_CHECKLIST,
+  });
+}
+
+export async function extendProbation(userId, employeeId, newEndDateISO, note, todayDate) {
+  const emp = await getEmployee(userId, employeeId);
+  const history = emp?.probation?.history || [];
+  await updateEmployee(userId, employeeId, {
+    status: "probation",
+    "probation.endDate": newEndDateISO,
+    "probation.decision": null,
+    "probation.history": [
+      ...history,
+      { type: "extended", date: todayDate, newEndDate: newEndDateISO, note: note || null },
+    ],
+  });
+}
+
+export async function endEmployment(userId, employeeId, endDate, reason) {
+  await updateEmployee(userId, employeeId, {
+    status: "ended",
+    "probation.decision": { type: "ended", date: endDate, reason: reason || null },
+  });
+}
+
+export async function scheduleReview(userId, employeeId, reviewDateISO, note, todayDate) {
+  await updateEmployee(userId, employeeId, {
+    status: "action_required",
+    "probation.decision": {
+      type: "review_scheduled",
+      date: todayDate,
+      reviewDate: reviewDateISO,
+      note: note || null,
+    },
+  });
+}
+
+export async function updateChecklist(userId, employeeId, checklistPatch) {
+  const emp = await getEmployee(userId, employeeId);
+  const merged = { ...DEFAULT_CHECKLIST, ...(emp?.checklist || {}), ...checklistPatch };
+  await updateEmployee(userId, employeeId, { checklist: merged });
+}

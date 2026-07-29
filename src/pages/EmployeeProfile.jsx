@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import { useLanguage } from "../contexts/LanguageContext";
@@ -6,6 +6,8 @@ import { getEmployee } from "../lib/employees";
 import { deriveStatus, getProbationInfo } from "../lib/employeeStatus";
 import EmployeeCounter from "../components/EmployeeCounter";
 import StatusBadge from "../components/StatusBadge";
+import ProbationActionRequired from "../components/ProbationActionRequired";
+import PostProbationChecklist from "../components/PostProbationChecklist";
 import "./EmployeeProfile.css";
 
 export default function EmployeeProfile() {
@@ -15,8 +17,14 @@ export default function EmployeeProfile() {
   const [employee, setEmployee] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  const refetch = useCallback(async () => {
+    const emp = await getEmployee(user.uid, id);
+    setEmployee(emp);
+  }, [user, id]);
+
   useEffect(() => {
     let active = true;
+    setLoading(true);
     getEmployee(user.uid, id).then((emp) => {
       if (active) {
         setEmployee(emp);
@@ -63,6 +71,26 @@ export default function EmployeeProfile() {
             <div className="profile-page__progress-fill" style={{ width: `${probation.percent}%` }} />
           </div>
         </div>
+      )}
+
+      {status === "action_required" && (
+        <ProbationActionRequired employee={employee} onDecided={refetch} />
+      )}
+
+      {employee.probation?.history?.length > 0 && (
+        <div className="profile-page__history">
+          <span className="profile-page__history-title">{t("probationHistory")}</span>
+          {employee.probation.history.map((h, i) => (
+            <div key={i} className="profile-page__history-row">
+              {t("extendedOn", { date: h.date, newDate: h.newEndDate })}
+              {h.note ? ` — ${h.note}` : ""}
+            </div>
+          ))}
+        </div>
+      )}
+
+      {status === "active" && employee.checklist && (
+        <PostProbationChecklist employee={employee} onChanged={refetch} />
       )}
 
       <div className="profile-page__details">

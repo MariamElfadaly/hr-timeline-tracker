@@ -4,6 +4,7 @@ import { useAuth } from "../contexts/AuthContext";
 import { useLanguage } from "../contexts/LanguageContext";
 import { subscribeToEmployees } from "../lib/employees";
 import { deriveStatus } from "../lib/employeeStatus";
+import { buildReminders } from "../lib/reminders";
 import EmployeeCard from "../components/EmployeeCard";
 import "./EmployeeList.css";
 
@@ -46,11 +47,20 @@ export default function EmployeeList() {
     });
   }, [employees, search, statusFilter]);
 
+  const reminderCount = useMemo(() => {
+    if (!employees) return 0;
+    return buildReminders(employees, t).length;
+  }, [employees, t]);
+
   return (
     <div className="list-page">
       <header className="list-page__header">
         <h1 className="list-page__title">{t("employees")}</h1>
         <div className="list-page__header-actions">
+          <Link to="/reminders" className="btn btn--ghost list-page__reminders-btn">
+            {t("reminders")}
+            {reminderCount > 0 && <span className="list-page__reminders-badge">{reminderCount}</span>}
+          </Link>
           <button className="btn btn--ghost" onClick={toggleLang} type="button">
             {lang === "ar" ? "EN" : "AR"}
           </button>

@@ -113,3 +113,27 @@
     padding: 24px 16px;
   }
 }
+
+.profile-page__history {
+  background: var(--surface);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-lg);
+  padding: 16px 20px;
+  margin-bottom: 16px;
+}
+
+.profile-page__history-title {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-faint);
+  margin-bottom: 8px;
+}
+
+.profile-page__history-row {
+  font-size: 13px;
+  color: var(--text-muted);
+  padding: 4px 0;
+}

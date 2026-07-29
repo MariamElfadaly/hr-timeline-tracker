@@ -1,0 +1,73 @@
+.reminders-page {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 32px 24px 80px;
+}
+
+.reminders-page__back {
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 13px;
+}
+
+.reminders-page__title {
+  font-family: var(--font-display);
+  font-size: 28px;
+  margin: 12px 0 24px;
+}
+
+.reminders-page__loading,
+.reminders-page__empty {
+  text-align: center;
+  color: var(--text-muted);
+  padding: 60px 20px;
+  background: var(--surface);
+  border: 1px dashed var(--border);
+  border-radius: var(--radius-lg);
+}
+
+.reminders-page__list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.reminder {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  background: var(--surface);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-md);
+  padding: 16px 18px;
+  text-decoration: none;
+  color: var(--text);
+  transition: border-color 0.15s ease;
+}
+
+.reminder:hover {
+  border-color: var(--brass-dim);
+}
+
+.reminder__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-top: 5px;
+  flex-shrink: 0;
+}
+
+.reminder--high .reminder__dot { background: var(--red); }
+.reminder--medium .reminder__dot { background: var(--brass); }
+.reminder--low .reminder__dot { background: var(--text-faint); }
+
+.reminder__name {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.reminder__text {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-top: 2px;
+}

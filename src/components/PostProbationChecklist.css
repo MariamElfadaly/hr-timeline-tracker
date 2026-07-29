@@ -1,0 +1,114 @@
+.checklist {
+  background: var(--surface);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-lg);
+  padding: 22px 24px;
+  margin-bottom: 16px;
+}
+
+.checklist__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.checklist__title {
+  font-family: var(--font-display);
+  font-size: 17px;
+  font-weight: 600;
+}
+
+.checklist__status {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-faint);
+  background: rgba(144, 153, 168, 0.12);
+  padding: 4px 10px;
+  border-radius: 999px;
+}
+
+.checklist__status--done {
+  color: var(--teal);
+  background: var(--teal-bg);
+}
+
+.checklist-item {
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border-soft);
+}
+
+.checklist-item:last-child {
+  border-bottom: none;
+}
+
+.checklist-item__row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.checklist-item__toggle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.checklist-item__toggle input {
+  width: 17px;
+  height: 17px;
+  accent-color: var(--teal);
+}
+
+.checklist-item--done .checklist-item__toggle span {
+  color: var(--text);
+}
+
+.checklist-item__note {
+  font-size: 12px;
+  color: var(--text-faint);
+}
+
+.checklist__required-toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  color: var(--text-muted);
+  cursor: pointer;
+}
+
+.checklist-item__extra {
+  margin-top: 10px;
+  margin-inline-start: 27px;
+}
+
+.checklist__inline-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.checklist__inline-input {
+  background: var(--surface-raised);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 8px 10px;
+  color: var(--text);
+  font-size: 13px;
+  max-width: 220px;
+}
+
+.checklist__inline-input--sm {
+  max-width: 100px;
+}
+
+.checklist__saving {
+  margin-top: 12px;
+  font-size: 12px;
+  color: var(--text-faint);
+}
