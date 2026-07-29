@@ -10,6 +10,9 @@ import ProbationActionRequired from "../components/ProbationActionRequired";
 import PostProbationChecklist from "../components/PostProbationChecklist";
 import EmployeeTimeline from "../components/EmployeeTimeline";
 import CustomMilestones from "../components/CustomMilestones";
+import EarlyConfirm from "../components/EarlyConfirm";
+import NotesEditor from "../components/NotesEditor";
+import DangerZone from "../components/DangerZone";
 import "./EmployeeProfile.css";
 
 export default function EmployeeProfile() {
@@ -46,9 +49,19 @@ export default function EmployeeProfile() {
 
   return (
     <div className="profile-page">
-      <Link to="/" className="profile-page__back">
-        ← {t("backToList")}
-      </Link>
+      <div className="profile-page__toolbar no-print">
+        <Link to="/" className="profile-page__back">
+          ← {t("backToList")}
+        </Link>
+        <div className="profile-page__toolbar-actions">
+          <Link to={`/employees/${id}/edit`} className="btn btn--ghost profile-page__toolbar-btn">
+            {t("editEmployee")}
+          </Link>
+          <button className="btn btn--ghost profile-page__toolbar-btn" onClick={() => window.print()}>
+            {t("print")}
+          </button>
+        </div>
+      </div>
 
       <div className="profile-page__header">
         <div>
@@ -79,6 +92,9 @@ export default function EmployeeProfile() {
                 : t("reminderProbationDecideSoon", { days: probation.daysRemaining })}
             </div>
           )}
+          <div className="no-print">
+            <EarlyConfirm employee={employee} onDecided={refetch} />
+          </div>
         </div>
       )}
 
@@ -106,6 +122,8 @@ export default function EmployeeProfile() {
 
       <CustomMilestones employee={employee} onChanged={refetch} />
 
+      <NotesEditor employee={employee} />
+
       <div className="profile-page__details">
         <DetailRow label={t("employeeId")} value={employee.employeeId} />
         <DetailRow label={t("joiningDate")} value={employee.joiningDate} />
@@ -113,6 +131,10 @@ export default function EmployeeProfile() {
         {employee.department && <DetailRow label={t("department")} value={employee.department} />}
         {employee.email && <DetailRow label={t("emailOptional")} value={employee.email} />}
         {employee.manager && <DetailRow label={t("manager")} value={employee.manager} />}
+      </div>
+
+      <div className="no-print">
+        <DangerZone employee={employee} />
       </div>
     </div>
   );

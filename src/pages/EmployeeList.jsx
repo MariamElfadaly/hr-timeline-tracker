@@ -57,6 +57,9 @@ export default function EmployeeList() {
       <header className="list-page__header">
         <h1 className="list-page__title">{t("employees")}</h1>
         <div className="list-page__header-actions">
+          <Link to="/reports" className="btn btn--ghost">
+            {t("reports")}
+          </Link>
           <Link to="/reminders" className="btn btn--ghost list-page__reminders-btn">
             {t("reminders")}
             {reminderCount > 0 && <span className="list-page__reminders-badge">{reminderCount}</span>}

@@ -16,6 +16,7 @@ export default function EmployeeCard({ employee }) {
         <div>
           <div className="emp-card__name">{employee.name}</div>
           <div className="emp-card__title">{employee.jobTitle}</div>
+          <div className="emp-card__id">{employee.employeeId}</div>
         </div>
         <StatusBadge status={status} />
       </div>

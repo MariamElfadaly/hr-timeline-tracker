@@ -34,6 +34,13 @@
   margin-top: 2px;
 }
 
+.emp-card__id {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-faint);
+  margin-top: 3px;
+}
+
 .emp-card__at {
   font-size: 11px;
   color: var(--text-faint);

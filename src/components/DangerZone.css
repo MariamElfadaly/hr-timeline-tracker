@@ -1,0 +1,32 @@
+.danger-zone {
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px dashed var(--border);
+}
+
+.danger-zone__trigger {
+  background: none;
+  border: none;
+  color: var(--text-faint);
+  font-size: 12px;
+  text-decoration: underline;
+  cursor: pointer;
+  padding: 4px 0;
+}
+
+.danger-zone__trigger:hover {
+  color: var(--red);
+}
+
+.danger-zone__confirm {
+  background: var(--red-bg);
+  border: 1px solid rgba(209, 73, 91, 0.35);
+  border-radius: var(--radius-lg);
+  padding: 18px 20px;
+}
+
+.danger-zone__prompt {
+  margin: 0 0 14px;
+  font-size: 13px;
+  color: var(--text);
+}

@@ -63,3 +63,9 @@
     padding: 20px;
   }
 }
+
+.add-page__edit-hint {
+  color: var(--text-faint);
+  font-size: 12px;
+  margin: -12px 0 20px;
+}

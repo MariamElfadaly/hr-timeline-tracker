@@ -71,3 +71,27 @@
   color: var(--text-muted);
   margin-top: 2px;
 }
+
+.reminder__body {
+  flex: 1;
+}
+
+.reminder__dismiss {
+  flex-shrink: 0;
+  background: var(--surface-raised);
+  border: 1px solid var(--border);
+  color: var(--text-faint);
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  font-size: 13px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.reminder__dismiss:hover {
+  border-color: var(--teal);
+  color: var(--teal);
+}

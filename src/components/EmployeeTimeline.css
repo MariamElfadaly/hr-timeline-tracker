@@ -6,11 +6,31 @@
   margin-bottom: 16px;
 }
 
+.etl__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+}
+
 .etl__title {
   font-family: var(--font-display);
   font-size: 17px;
   font-weight: 600;
-  margin-bottom: 18px;
+}
+
+.etl__toggle {
+  background: none;
+  border: none;
+  color: var(--brass);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 4px 0;
+}
+
+.etl__toggle:hover {
+  text-decoration: underline;
 }
 
 .etl__track {

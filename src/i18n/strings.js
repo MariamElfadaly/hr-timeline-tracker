@@ -145,6 +145,44 @@ export const strings = {
     reminderMilestoneToday: "{label} is today",
     reminderMilestoneIn: "{label} in {days} days",
 
+    // Delete
+    deleteEmployee: "Delete this employee",
+    deleteEmployeePrompt: "Permanently delete {name}? This can't be undone.",
+    deleteConfirm: "Yes, delete",
+
+    // Edit
+    editEmployee: "Edit",
+    editEmployeeHint: "Joining date and probation aren't editable here — use Extend/Confirm/End on the profile for those.",
+    backToProfile: "Back to profile",
+
+    // Print
+    print: "Print",
+
+    // Notes
+    notes: "Notes",
+    notesPlaceholder: "Any comments about this employee…",
+    notesUnsavedHint: "Saves when you click away",
+
+    // Early confirm
+    confirmEarly: "Confirm employee now",
+    confirmEarlyPrompt: "Confirm this employee before probation ends? This will start their post-probation checklist immediately.",
+
+    // Reminders dismiss
+    dismiss: "Mark as done",
+
+    // Timeline collapse
+    timelineShowMore: "Show {count} more",
+    timelineShowLess: "Show less",
+
+    // Reports
+    reports: "Reports",
+    totalEmployees: "Total employees",
+    reportProbationEndingSoon: "Probation ending within 30 days",
+    reportIncompleteChecklists: "Incomplete checklists",
+    reportUpcomingMilestones: "Milestones in the next 30 days",
+    reportNoneFound: "Nothing here.",
+    daysRemainingCount: "{days} days remaining",
+
     genericError: "Something went wrong. Please try again.",
   },
   ar: {
@@ -291,6 +329,44 @@ export const strings = {
     milestoneType_other: "أخرى",
     reminderMilestoneToday: "{label} اليوم",
     reminderMilestoneIn: "{label} خلال {days} يوم",
+
+    // Delete
+    deleteEmployee: "حذف هذا الموظف",
+    deleteEmployeePrompt: "هل تريدين حذف {name} نهائيًا؟ لا يمكن التراجع عن هذا الإجراء.",
+    deleteConfirm: "نعم، احذف",
+
+    // Edit
+    editEmployee: "تعديل",
+    editEmployeeHint: "تاريخ الالتحاق وفترة الاختبار غير قابلين للتعديل هنا — استخدمي أزرار التمديد/التثبيت/الإنهاء في الملف الشخصي لذلك.",
+    backToProfile: "العودة للملف الشخصي",
+
+    // Print
+    print: "طباعة",
+
+    // Notes
+    notes: "ملاحظات",
+    notesPlaceholder: "أي تعليقات حول هذا الموظف…",
+    notesUnsavedHint: "يتم الحفظ عند الانتقال بعيدًا",
+
+    // Early confirm
+    confirmEarly: "تثبيت الموظف الآن",
+    confirmEarlyPrompt: "هل تريدين تثبيت هذا الموظف قبل انتهاء فترة الاختبار؟ سيؤدي هذا لبدء قائمة ما بعد الاختبار فورًا.",
+
+    // Reminders dismiss
+    dismiss: "تمييز كمكتمل",
+
+    // Timeline collapse
+    timelineShowMore: "عرض {count} أخرى",
+    timelineShowLess: "عرض أقل",
+
+    // Reports
+    reports: "التقارير",
+    totalEmployees: "إجمالي الموظفين",
+    reportProbationEndingSoon: "فترات اختبار تنتهي خلال 30 يومًا",
+    reportIncompleteChecklists: "قوائم غير مكتملة",
+    reportUpcomingMilestones: "مواعيد خلال 30 يومًا القادمة",
+    reportNoneFound: "لا يوجد شيء هنا.",
+    daysRemainingCount: "{days} يوم متبقي",
 
     genericError: "حدث خطأ ما. حاولي مرة أخرى.",
   },

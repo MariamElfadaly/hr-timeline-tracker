@@ -16,6 +16,22 @@
   font-size: 13px;
 }
 
+.profile-page__toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.profile-page__toolbar-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.profile-page__toolbar-btn {
+  padding: 7px 14px;
+  font-size: 12px;
+}
+
 .profile-page__header {
   display: flex;
   justify-content: space-between;
@@ -92,6 +108,35 @@
   font-size: 13px;
   font-weight: 600;
   color: var(--brass);
+}
+
+.early-confirm__trigger {
+  margin-top: 14px;
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  border-radius: var(--radius-sm);
+  padding: 8px 14px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.early-confirm__trigger:hover {
+  border-color: var(--teal);
+  color: var(--teal);
+}
+
+.early-confirm__box {
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border-soft);
+}
+
+.early-confirm__prompt {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin: 0 0 12px;
 }
 
 .profile-page__details {

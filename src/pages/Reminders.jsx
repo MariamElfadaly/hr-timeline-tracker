@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import { useLanguage } from "../contexts/LanguageContext";
-import { subscribeToEmployees } from "../lib/employees";
+import { subscribeToEmployees, dismissReminder } from "../lib/employees";
 import { buildReminders } from "../lib/reminders";
 import "./Reminders.css";
 
@@ -17,6 +17,12 @@ export default function Reminders() {
   }, [user]);
 
   const reminders = employees ? buildReminders(employees, t) : [];
+
+  async function handleDismiss(e, reminder) {
+    e.preventDefault();
+    e.stopPropagation();
+    await dismissReminder(user.uid, reminder.employeeId, reminder.id);
+  }
 
   return (
     <div className="reminders-page">
@@ -35,10 +41,18 @@ export default function Reminders() {
         {reminders.map((r) => (
           <Link key={r.id} to={`/employees/${r.employeeId}`} className={`reminder reminder--${r.severity}`}>
             <span className="reminder__dot" />
-            <div>
+            <div className="reminder__body">
               <div className="reminder__name">{r.employeeName}</div>
               <div className="reminder__text">{r.text}</div>
             </div>
+            <button
+              className="reminder__dismiss"
+              onClick={(e) => handleDismiss(e, r)}
+              aria-label={t("dismiss")}
+              title={t("dismiss")}
+            >
+              ✓
+            </button>
           </Link>
         ))}
       </div>

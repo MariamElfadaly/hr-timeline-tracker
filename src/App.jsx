@@ -6,7 +6,9 @@ import Login from "./pages/Login";
 import EmployeeList from "./pages/EmployeeList";
 import AddEmployee from "./pages/AddEmployee";
 import EmployeeProfile from "./pages/EmployeeProfile";
+import EditEmployee from "./pages/EditEmployee";
 import Reminders from "./pages/Reminders";
+import Reports from "./pages/Reports";
 
 // HashRouter avoids needing server-side rewrite rules on GitHub Pages.
 const Router = HashRouter;
@@ -49,10 +51,26 @@ export default function App() {
               }
             />
             <Route
+              path="/employees/:id/edit"
+              element={
+                <ProtectedRoute>
+                  <EditEmployee />
+                </ProtectedRoute>
+              }
+            />
+            <Route
               path="/reminders"
               element={
                 <ProtectedRoute>
                   <Reminders />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/reports"
+              element={
+                <ProtectedRoute>
+                  <Reports />
                 </ProtectedRoute>
               }
             />

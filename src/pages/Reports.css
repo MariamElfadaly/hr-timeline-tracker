@@ -1,0 +1,114 @@
+.reports-page {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 32px 24px 80px;
+}
+
+.reports-page--loading {
+  text-align: center;
+  color: var(--text-muted);
+  padding: 80px 20px;
+}
+
+.reports-page__back {
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 13px;
+}
+
+.reports-page__title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 12px 0 24px;
+}
+
+.reports-page__title {
+  font-family: var(--font-display);
+  font-size: 28px;
+  margin: 0;
+}
+
+.reports-page__summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+  gap: 10px;
+  margin-bottom: 28px;
+}
+
+.summary-stat {
+  background: var(--surface);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  text-align: center;
+}
+
+.summary-stat--urgent {
+  border-color: rgba(209, 73, 91, 0.4);
+  background: var(--red-bg);
+}
+
+.summary-stat__value {
+  font-family: var(--font-mono);
+  font-size: 26px;
+  font-weight: 600;
+  color: var(--brass);
+}
+
+.summary-stat--urgent .summary-stat__value {
+  color: var(--red);
+}
+
+.summary-stat__label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-faint);
+  margin-top: 4px;
+}
+
+.reports-section {
+  margin-bottom: 20px;
+}
+
+.reports-section__title {
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.reports-section__list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.reports-row {
+  display: flex;
+  justify-content: space-between;
+  background: var(--surface);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-sm);
+  padding: 11px 14px;
+  text-decoration: none;
+  color: var(--text);
+  font-size: 13px;
+}
+
+.reports-row:hover {
+  border-color: var(--brass-dim);
+}
+
+.reports-row__meta {
+  color: var(--text-faint);
+  font-family: var(--font-mono);
+  font-size: 12px;
+}
+
+.reports-section__empty {
+  color: var(--text-faint);
+  font-size: 13px;
+  padding: 4px 0;
+}

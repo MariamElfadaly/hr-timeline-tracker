@@ -2,6 +2,7 @@ import {
   collection,
   doc,
   addDoc,
+  deleteDoc,
   getDoc,
   onSnapshot,
   query,
@@ -79,6 +80,10 @@ export async function createEmployee(userId, input) {
 
   const ref = await addDoc(employeesCol(userId), record);
   return ref.id;
+}
+
+export async function deleteEmployee(userId, employeeId) {
+  await deleteDoc(employeeDoc(userId, employeeId));
 }
 
 export async function updateEmployee(userId, employeeId, patch) {
@@ -186,4 +191,31 @@ export async function deleteMilestone(userId, employeeId, milestoneId) {
   const emp = await getEmployee(userId, employeeId);
   const milestones = (emp?.milestones || []).filter((m) => m.id !== milestoneId);
   await updateEmployee(userId, employeeId, { milestones });
+}
+
+export async function dismissReminder(userId, employeeId, reminderId) {
+  await updateEmployee(userId, employeeId, {
+    [`dismissedReminders.${reminderId}`]: true,
+  });
+}
+
+export async function updateNotes(userId, employeeId, notes) {
+  await updateEmployee(userId, employeeId, { notes });
+}
+
+/**
+ * Editable core info fields — deliberately excludes joiningDate and
+ * probation, since those drive dates/history tracked elsewhere and are
+ * safer to change only through the dedicated probation actions.
+ */
+export async function updateEmployeeInfo(userId, employeeId, input) {
+  await updateEmployee(userId, employeeId, {
+    name: input.name.trim(),
+    employeeId: input.employeeId.trim(),
+    jobTitle: input.jobTitle.trim(),
+    phoneNumber: input.phoneNumber.trim(),
+    department: input.department?.trim() || null,
+    email: input.email?.trim() || null,
+    manager: input.manager?.trim() || null,
+  });
 }

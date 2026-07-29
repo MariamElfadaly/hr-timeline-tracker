@@ -173,3 +173,22 @@ a {
 .btn--ghost:hover {
   border-color: var(--brass-dim);
 }
+
+/* Print support: hide interactive chrome, keep the record itself clean */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  body {
+    background: #fff;
+    color: #000;
+  }
+  .counter__digits,
+  .profile-page__name,
+  .etl__title,
+  .checklist__title,
+  .milestones__title,
+  .notes-editor__title {
+    color: #000 !important;
+  }
+}

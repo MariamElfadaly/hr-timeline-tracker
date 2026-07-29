@@ -3,8 +3,9 @@ import { totalDaysBetween } from "./dateUtils";
 
 /**
  * Builds the full reminders list for the employer, computed fresh from
- * live employee data each time — nothing here is stored separately.
- * Sorted most-urgent first.
+ * live employee data each time — nothing here is stored separately, except
+ * dismissals (employee.dismissedReminders), which HR can mark as "done" to
+ * silence a specific reminder until the underlying situation changes.
  */
 export function buildReminders(employees, t) {
   const items = [];
@@ -33,21 +34,20 @@ export function buildReminders(employees, t) {
       }
     }
 
+    // Only surface a probation reminder in the final week — anything
+    // further out is just noise on the Reminders page.
     if (status === "probation") {
       const p = getProbationInfo(emp);
-      if (p.daysRemaining <= 30) {
-        const urgent = p.daysRemaining <= 7;
+      if (p.daysRemaining <= 7) {
         items.push({
           id: `${emp.id}-probation`,
           employeeId: emp.id,
           employeeName: emp.name,
-          severity: urgent ? "high" : "medium",
+          severity: "high",
           text:
             p.daysRemaining === 0
               ? t("reminderProbationDecideToday")
-              : urgent
-              ? t("reminderProbationDecideSoon", { days: p.daysRemaining })
-              : t("reminderProbationEndsIn", { days: p.daysRemaining }),
+              : t("reminderProbationDecideSoon", { days: p.daysRemaining }),
         });
       }
     }
@@ -91,6 +91,11 @@ export function buildReminders(employees, t) {
     }
   }
 
+  const visible = items.filter((item) => {
+    const emp = employees.find((e) => e.id === item.employeeId);
+    return !emp?.dismissedReminders?.[item.id];
+  });
+
   const order = { high: 0, medium: 1, low: 2 };
-  return items.sort((a, b) => order[a.severity] - order[b.severity]);
+  return visible.sort((a, b) => order[a.severity] - order[b.severity]);
 }
