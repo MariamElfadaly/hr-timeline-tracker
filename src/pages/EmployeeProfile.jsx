@@ -11,8 +11,10 @@ import PostProbationChecklist from "../components/PostProbationChecklist";
 import EmployeeTimeline from "../components/EmployeeTimeline";
 import CustomMilestones from "../components/CustomMilestones";
 import EarlyConfirm from "../components/EarlyConfirm";
+import ActiveEmployeeActions from "../components/ActiveEmployeeActions";
 import NotesEditor from "../components/NotesEditor";
 import DangerZone from "../components/DangerZone";
+import PrintHeader from "../components/PrintHeader";
 import "./EmployeeProfile.css";
 
 export default function EmployeeProfile() {
@@ -49,6 +51,8 @@ export default function EmployeeProfile() {
 
   return (
     <div className="profile-page">
+      <PrintHeader employee={employee} />
+
       <div className="profile-page__toolbar no-print">
         <Link to="/" className="profile-page__back">
           ← {t("backToList")}
@@ -63,7 +67,7 @@ export default function EmployeeProfile() {
         </div>
       </div>
 
-      <div className="profile-page__header">
+      <div className="profile-page__header no-print">
         <div>
           <h1 className="profile-page__name">{employee.name}</h1>
           <p className="profile-page__title">{employee.jobTitle}</p>
@@ -102,6 +106,8 @@ export default function EmployeeProfile() {
         <ProbationActionRequired employee={employee} onDecided={refetch} />
       )}
 
+      {status === "active" && <ActiveEmployeeActions employee={employee} onChanged={refetch} />}
+
       {employee.probation?.history?.length > 0 && (
         <div className="profile-page__history">
           <span className="profile-page__history-title">{t("probationHistory")}</span>
@@ -122,7 +128,7 @@ export default function EmployeeProfile() {
 
       <CustomMilestones employee={employee} onChanged={refetch} />
 
-      <NotesEditor employee={employee} />
+      <NotesEditor employee={employee} onChanged={refetch} />
 
       <div className="profile-page__details">
         <DetailRow label={t("employeeId")} value={employee.employeeId} />

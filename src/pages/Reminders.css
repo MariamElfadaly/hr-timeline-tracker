@@ -61,6 +61,19 @@
 .reminder--medium .reminder__dot { background: var(--brass); }
 .reminder--low .reminder__dot { background: var(--text-faint); }
 
+.reminder--high .reminder__check { border-color: rgba(209, 73, 91, 0.4); }
+.reminder--medium .reminder__check { border-color: rgba(212, 162, 76, 0.4); }
+.reminder--low .reminder__check { border-color: var(--border); }
+
+.reminder--checked {
+  opacity: 0.55;
+}
+
+.reminder--checked .reminder__name,
+.reminder--checked .reminder__text {
+  text-decoration: line-through;
+}
+
 .reminder__name {
   font-weight: 600;
   font-size: 14px;
@@ -76,22 +89,43 @@
   flex: 1;
 }
 
-.reminder__dismiss {
+.reminder__check {
   flex-shrink: 0;
   background: var(--surface-raised);
   border: 1px solid var(--border);
-  color: var(--text-faint);
+  color: var(--teal);
   border-radius: 50%;
-  width: 28px;
-  height: 28px;
+  width: 26px;
+  height: 26px;
   font-size: 13px;
+  font-weight: 700;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-top: 2px;
 }
 
-.reminder__dismiss:hover {
+.reminder__check:hover {
   border-color: var(--teal);
-  color: var(--teal);
+}
+
+.reminder__check--on {
+  background: var(--teal-bg);
+  border-color: var(--teal);
+}
+
+.reminder__delete {
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  color: var(--text-faint);
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 2px 6px;
+}
+
+.reminder__delete:hover {
+  color: var(--red);
 }

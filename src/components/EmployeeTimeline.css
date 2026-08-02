@@ -33,6 +33,23 @@
   text-decoration: underline;
 }
 
+.etl__collapsed-summary {
+  width: 100%;
+  background: var(--surface-raised);
+  border: 1px dashed var(--border);
+  border-radius: var(--radius-md);
+  padding: 14px;
+  color: var(--text-muted);
+  font-size: 13px;
+  cursor: pointer;
+  text-align: center;
+}
+
+.etl__collapsed-summary:hover {
+  border-color: var(--brass-dim);
+  color: var(--brass);
+}
+
 .etl__track {
   display: flex;
   flex-direction: column;

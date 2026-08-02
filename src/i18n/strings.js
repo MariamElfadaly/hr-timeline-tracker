@@ -122,6 +122,25 @@ export const strings = {
     timeline_3_months: "3-month milestone",
     timeline_6_months: "6-month milestone",
     timelineYearAnniversary: "{years}-year anniversary",
+    timelineScheduledReview: "Scheduled review",
+
+    // Active employee actions
+    reviewScheduledFor: "Review scheduled for {date}",
+    clear: "Clear",
+    reminderActiveReviewToday: "Scheduled review is today",
+    reminderActiveReviewIn: "Scheduled review in {days} days",
+
+    // Reminders: check (keep, mark done) vs delete (remove)
+    markDone: "Mark as done",
+    deleteReminder: "Delete reminder",
+
+    // Notes log
+    addNote: "Add note",
+    noNotesYet: "No notes yet.",
+
+    // Print report
+    printReportEyebrow: "Employee Record",
+    printGeneratedOn: "Generated {date}",
 
     // Phase 3: Custom milestones
     customMilestones: "Custom milestones",
@@ -167,11 +186,8 @@ export const strings = {
     confirmEarly: "Confirm employee now",
     confirmEarlyPrompt: "Confirm this employee before probation ends? This will start their post-probation checklist immediately.",
 
-    // Reminders dismiss
-    dismiss: "Mark as done",
-
     // Timeline collapse
-    timelineShowMore: "Show {count} more",
+    timelineShowAll: "Show all {count} events",
     timelineShowLess: "Show less",
 
     // Reports
@@ -307,6 +323,25 @@ export const strings = {
     timeline_3_months: "علامة الثلاثة أشهر",
     timeline_6_months: "علامة الستة أشهر",
     timelineYearAnniversary: "الذكرى السنوية ({years} سنة)",
+    timelineScheduledReview: "مراجعة مجدولة",
+
+    // Active employee actions
+    reviewScheduledFor: "المراجعة مجدولة بتاريخ {date}",
+    clear: "إلغاء الجدولة",
+    reminderActiveReviewToday: "المراجعة المجدولة اليوم",
+    reminderActiveReviewIn: "المراجعة المجدولة خلال {days} يوم",
+
+    // Reminders: check (keep, mark done) vs delete (remove)
+    markDone: "تمييز كمكتمل",
+    deleteReminder: "حذف التذكير",
+
+    // Notes log
+    addNote: "إضافة ملاحظة",
+    noNotesYet: "لا توجد ملاحظات بعد.",
+
+    // Print report
+    printReportEyebrow: "ملف الموظف",
+    printGeneratedOn: "تم الإنشاء بتاريخ {date}",
 
     // Phase 3: Custom milestones
     customMilestones: "مواعيد مخصصة",
@@ -352,11 +387,8 @@ export const strings = {
     confirmEarly: "تثبيت الموظف الآن",
     confirmEarlyPrompt: "هل تريدين تثبيت هذا الموظف قبل انتهاء فترة الاختبار؟ سيؤدي هذا لبدء قائمة ما بعد الاختبار فورًا.",
 
-    // Reminders dismiss
-    dismiss: "تمييز كمكتمل",
-
     // Timeline collapse
-    timelineShowMore: "عرض {count} أخرى",
+    timelineShowAll: "عرض كل الأحداث ({count})",
     timelineShowLess: "عرض أقل",
 
     // Reports

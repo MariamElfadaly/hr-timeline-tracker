@@ -1,0 +1,30 @@
+.active-actions {
+  margin-bottom: 16px;
+}
+
+.active-actions__scheduled {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--teal-bg);
+  border: 1px solid rgba(79, 176, 165, 0.3);
+  border-radius: var(--radius-md);
+  padding: 12px 16px;
+  font-size: 13px;
+  color: var(--teal);
+  margin-bottom: 10px;
+}
+
+.active-actions__clear {
+  background: none;
+  border: none;
+  color: var(--teal);
+  text-decoration: underline;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.active-actions__buttons {
+  display: flex;
+  gap: 10px;
+}

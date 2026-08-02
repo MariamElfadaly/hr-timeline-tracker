@@ -193,14 +193,21 @@ export async function deleteMilestone(userId, employeeId, milestoneId) {
   await updateEmployee(userId, employeeId, { milestones });
 }
 
-export async function dismissReminder(userId, employeeId, reminderId) {
-  await updateEmployee(userId, employeeId, {
-    [`dismissedReminders.${reminderId}`]: true,
-  });
+export async function addNoteEntry(userId, employeeId, text) {
+  const emp = await getEmployee(userId, employeeId);
+  const notesLog = emp?.notesLog || [];
+  const entry = {
+    id: `${Date.now().toString(36)}${Math.random().toString(36).slice(2, 6)}`,
+    text: text.trim(),
+    timestamp: new Date().toISOString(),
+  };
+  await updateEmployee(userId, employeeId, { notesLog: [entry, ...notesLog] });
 }
 
-export async function updateNotes(userId, employeeId, notes) {
-  await updateEmployee(userId, employeeId, { notes });
+export async function deleteNoteEntry(userId, employeeId, noteId) {
+  const emp = await getEmployee(userId, employeeId);
+  const notesLog = (emp?.notesLog || []).filter((n) => n.id !== noteId);
+  await updateEmployee(userId, employeeId, { notesLog });
 }
 
 /**
@@ -217,5 +224,34 @@ export async function updateEmployeeInfo(userId, employeeId, input) {
     department: input.department?.trim() || null,
     email: input.email?.trim() || null,
     manager: input.manager?.trim() || null,
+  });
+}
+
+/**
+ * Review scheduling for an ACTIVE (already confirmed) employee — distinct
+ * from probation's review_scheduled decision. Doesn't touch status; it's
+ * just a dated note that shows on the timeline and reminders.
+ */
+export async function scheduleActiveReview(userId, employeeId, dateISO, note) {
+  await updateEmployee(userId, employeeId, {
+    upcomingReview: { date: dateISO, note: note || null, createdAt: new Date().toISOString() },
+  });
+}
+
+export async function clearActiveReview(userId, employeeId) {
+  await updateEmployee(userId, employeeId, { upcomingReview: null });
+}
+
+/** Reminder "delete" — permanently removes it from the list. */
+export async function deleteReminder(userId, employeeId, reminderId) {
+  await updateEmployee(userId, employeeId, {
+    [`dismissedReminders.${reminderId}`]: true,
+  });
+}
+
+/** Reminder "check" — marks as done but keeps it visible, struck through. */
+export async function toggleReminderChecked(userId, employeeId, reminderId, checked) {
+  await updateEmployee(userId, employeeId, {
+    [`checkedReminders.${reminderId}`]: checked,
   });
 }

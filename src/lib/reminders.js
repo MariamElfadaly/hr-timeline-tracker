@@ -71,6 +71,22 @@ export function buildReminders(employees, t) {
       }
     }
 
+    if (status === "active" && emp.upcomingReview) {
+      const daysAway = totalDaysBetween(new Date(), emp.upcomingReview.date);
+      if (daysAway <= 7) {
+        items.push({
+          id: `${emp.id}-active-review`,
+          employeeId: emp.id,
+          employeeName: emp.name,
+          severity: "high",
+          text:
+            daysAway <= 0
+              ? t("reminderActiveReviewToday")
+              : t("reminderActiveReviewIn", { days: daysAway }),
+        });
+      }
+    }
+
     for (const m of emp.milestones || []) {
       const daysAway = totalDaysBetween(new Date(), m.date);
       const offsets = m.reminderOffsets && m.reminderOffsets.length > 0 ? m.reminderOffsets : [30, 14, 7, 1, 0];
@@ -91,11 +107,19 @@ export function buildReminders(employees, t) {
     }
   }
 
-  const visible = items.filter((item) => {
-    const emp = employees.find((e) => e.id === item.employeeId);
-    return !emp?.dismissedReminders?.[item.id];
-  });
+  const visible = items
+    .filter((item) => {
+      const emp = employees.find((e) => e.id === item.employeeId);
+      return !emp?.dismissedReminders?.[item.id];
+    })
+    .map((item) => {
+      const emp = employees.find((e) => e.id === item.employeeId);
+      return { ...item, checked: !!emp?.checkedReminders?.[item.id] };
+    });
 
   const order = { high: 0, medium: 1, low: 2 };
-  return visible.sort((a, b) => order[a.severity] - order[b.severity]);
+  return visible.sort((a, b) => {
+    if (a.checked !== b.checked) return a.checked ? 1 : -1;
+    return order[a.severity] - order[b.severity];
+  });
 }

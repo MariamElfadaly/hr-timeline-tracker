@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import { useLanguage } from "../contexts/LanguageContext";
-import { subscribeToEmployees, dismissReminder } from "../lib/employees";
+import { subscribeToEmployees, deleteReminder, toggleReminderChecked } from "../lib/employees";
 import { buildReminders } from "../lib/reminders";
 import "./Reminders.css";
 
@@ -18,10 +18,16 @@ export default function Reminders() {
 
   const reminders = employees ? buildReminders(employees, t) : [];
 
-  async function handleDismiss(e, reminder) {
+  async function handleToggleCheck(e, reminder) {
     e.preventDefault();
     e.stopPropagation();
-    await dismissReminder(user.uid, reminder.employeeId, reminder.id);
+    await toggleReminderChecked(user.uid, reminder.employeeId, reminder.id, !reminder.checked);
+  }
+
+  async function handleDelete(e, reminder) {
+    e.preventDefault();
+    e.stopPropagation();
+    await deleteReminder(user.uid, reminder.employeeId, reminder.id);
   }
 
   return (
@@ -39,19 +45,30 @@ export default function Reminders() {
 
       <div className="reminders-page__list">
         {reminders.map((r) => (
-          <Link key={r.id} to={`/employees/${r.employeeId}`} className={`reminder reminder--${r.severity}`}>
-            <span className="reminder__dot" />
+          <Link
+            key={r.id}
+            to={`/employees/${r.employeeId}`}
+            className={`reminder reminder--${r.severity} ${r.checked ? "reminder--checked" : ""}`}
+          >
+            <button
+              className={`reminder__check ${r.checked ? "reminder__check--on" : ""}`}
+              onClick={(e) => handleToggleCheck(e, r)}
+              aria-label={t("markDone")}
+              title={t("markDone")}
+            >
+              {r.checked ? "✓" : ""}
+            </button>
             <div className="reminder__body">
               <div className="reminder__name">{r.employeeName}</div>
               <div className="reminder__text">{r.text}</div>
             </div>
             <button
-              className="reminder__dismiss"
-              onClick={(e) => handleDismiss(e, r)}
-              aria-label={t("dismiss")}
-              title={t("dismiss")}
+              className="reminder__delete"
+              onClick={(e) => handleDelete(e, r)}
+              aria-label={t("deleteReminder")}
+              title={t("deleteReminder")}
             >
-              ✓
+              ×
             </button>
           </Link>
         ))}

@@ -26,11 +26,15 @@ export function buildTimelineEvents(employee, t) {
     add(employee.probation.startDate, t("timelineProbationStart"), "probation");
 
     const decision = employee.probation.decision;
-    if (decision?.type === "confirmed") {
-      add(decision.date, t("timelineConfirmed"), "confirmed");
-    } else if (decision?.type === "ended") {
+    const confirmedDate = employee.confirmation?.confirmedDate;
+
+    if (confirmedDate) {
+      add(confirmedDate, t("timelineConfirmed"), "confirmed");
+    }
+
+    if (decision?.type === "ended") {
       add(decision.date, t("timelineEnded"), "ended");
-    } else {
+    } else if (!confirmedDate) {
       add(employee.probation.endDate, t("timelineProbationEnd"), "probation");
     }
 
@@ -41,6 +45,10 @@ export function buildTimelineEvents(employee, t) {
     if (decision?.type === "review_scheduled" && decision.reviewDate) {
       add(decision.reviewDate, t("timelineReviewScheduled"), "probation");
     }
+  }
+
+  if (employee.upcomingReview) {
+    add(employee.upcomingReview.date, t("timelineScheduledReview"), "custom");
   }
 
   if (employee.checklist) {
