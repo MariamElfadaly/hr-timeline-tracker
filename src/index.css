@@ -238,12 +238,29 @@ a {
   .etl,
   .milestones,
   .notes-editor,
-  .profile-page__details {
+  .profile-page__details,
+  .summary-stat,
+  .insight-card,
+  .reports-row {
     background: #fff !important;
     border: 1px solid #ccc !important;
     box-shadow: none !important;
     break-inside: avoid;
     margin-bottom: 14px !important;
+  }
+
+  .summary-stat__value,
+  .insight-card__value,
+  .insight-card__label,
+  .dept-bar__label,
+  .dept-bar__count,
+  .reports-section__title,
+  .reports-section__subtitle {
+    color: #111 !important;
+  }
+
+  .dept-bar__fill {
+    background: #999 !important;
   }
 
   .counter__digits,

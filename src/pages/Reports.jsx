@@ -20,11 +20,24 @@ export default function Reports() {
     return <div className="reports-page reports-page--loading">…</div>;
   }
 
+  if (employees.length === 0) {
+    return (
+      <div className="reports-page">
+        <Link to="/" className="reports-page__back">
+          ← {t("backToList")}
+        </Link>
+        <h1 className="reports-page__title">{t("reports")}</h1>
+        <div className="reports-section__empty-box">{t("reportNoEmployees")}</div>
+      </div>
+    );
+  }
+
   const data = buildReportData(employees);
+  const employedTotal = data.total - (data.counts.ended || 0);
 
   return (
     <div className="reports-page">
-      <Link to="/" className="reports-page__back">
+      <Link to="/" className="reports-page__back no-print">
         ← {t("backToList")}
       </Link>
       <div className="reports-page__title-row">
@@ -34,6 +47,7 @@ export default function Reports() {
         </button>
       </div>
 
+      {/* Headcount */}
       <div className="reports-page__summary">
         <SummaryStat label={t("totalEmployees")} value={data.total} />
         <SummaryStat label={t("statusActive")} value={data.counts.active || 0} />
@@ -41,6 +55,54 @@ export default function Reports() {
         <SummaryStat label={t("statusActionRequired")} value={data.counts.action_required || 0} urgent />
         <SummaryStat label={t("statusEnded")} value={data.counts.ended || 0} />
       </div>
+
+      {/* Insights */}
+      <div className="reports-section__title">{t("reportInsights")}</div>
+      <div className="reports-page__insights">
+        <InsightCard
+          label={t("reportAvgTenure")}
+          value={
+            data.avgTenure
+              ? `${data.avgTenure.years}${t("yearsShort")} ${data.avgTenure.months}${t("monthsShort")}`
+              : "—"
+          }
+          hint={t("reportAvgTenureHint", { count: employedTotal })}
+        />
+        <InsightCard
+          label={t("reportProbationPassRate")}
+          value={data.probationPassRate !== null ? `${data.probationPassRate}%` : "—"}
+          hint={t("reportProbationPassRateHint", { count: data.probationDecided })}
+        />
+        <InsightCard
+          label={t("reportChecklistRate")}
+          value={data.checklistCompletionRate !== null ? `${data.checklistCompletionRate}%` : "—"}
+          hint={t("reportChecklistRateHint", { count: data.checklistTrackedCount })}
+        />
+      </div>
+
+      {/* Department breakdown */}
+      {data.departmentBreakdown.length > 0 && (
+        <>
+          <div className="reports-section__title">{t("reportByDepartment")}</div>
+          <div className="dept-bars">
+            {data.departmentBreakdown.map((d) => (
+              <div className="dept-bar" key={d.department}>
+                <span className="dept-bar__label">{d.department}</span>
+                <div className="dept-bar__track">
+                  <div
+                    className="dept-bar__fill"
+                    style={{ width: `${(d.count / employedTotal) * 100}%` }}
+                  />
+                </div>
+                <span className="dept-bar__count">{d.count}</span>
+              </div>
+            ))}
+          </div>
+        </>
+      )}
+
+      {/* Needs attention */}
+      <div className="reports-section__title">{t("reportNeedsAttention")}</div>
 
       <ReportSection title={t("reportProbationEndingSoon")} empty={t("reportNoneFound")}>
         {data.endingSoon.map((e) => (
@@ -84,11 +146,21 @@ function SummaryStat({ label, value, urgent }) {
   );
 }
 
+function InsightCard({ label, value, hint }) {
+  return (
+    <div className="insight-card">
+      <div className="insight-card__value">{value}</div>
+      <div className="insight-card__label">{label}</div>
+      <div className="insight-card__hint">{hint}</div>
+    </div>
+  );
+}
+
 function ReportSection({ title, empty, children }) {
   const hasContent = Array.isArray(children) ? children.length > 0 : !!children;
   return (
     <div className="reports-section">
-      <div className="reports-section__title">{title}</div>
+      <div className="reports-section__subtitle">{title}</div>
       {hasContent ? (
         <div className="reports-section__list">{children}</div>
       ) : (
