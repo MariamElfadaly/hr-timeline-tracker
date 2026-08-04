@@ -6,6 +6,7 @@ import { subscribeToEmployees } from "../lib/employees";
 import { deriveStatus } from "../lib/employeeStatus";
 import { buildReminders } from "../lib/reminders";
 import EmployeeCard from "../components/EmployeeCard";
+import PrintDirectory from "../components/PrintDirectory";
 import "./EmployeeList.css";
 
 const STATUS_FILTERS = [
@@ -52,11 +53,16 @@ export default function EmployeeList() {
     return buildReminders(employees, t).length;
   }, [employees, t]);
 
+  const filterLabel = statusFilter !== "all" ? t(STATUS_FILTERS.find((s) => s.value === statusFilter).key) : "";
+
   return (
     <div className="list-page">
-      <header className="list-page__header">
+      <header className="list-page__header no-print">
         <h1 className="list-page__title">{t("employees")}</h1>
         <div className="list-page__header-actions">
+          <button className="btn btn--ghost" onClick={() => window.print()} type="button">
+            {t("print")}
+          </button>
           <Link to="/reports" className="btn btn--ghost">
             {t("reports")}
           </Link>
@@ -73,7 +79,7 @@ export default function EmployeeList() {
         </div>
       </header>
 
-      <div className="list-page__controls">
+      <div className="list-page__controls no-print">
         <input
           className="list-page__search"
           type="search"
@@ -97,12 +103,12 @@ export default function EmployeeList() {
         </Link>
       </div>
 
-      {error && <div className="list-page__error">{error}</div>}
+      {error && <div className="list-page__error no-print">{error}</div>}
 
-      {employees === null && !error && <div className="list-page__loading">…</div>}
+      {employees === null && !error && <div className="list-page__loading no-print">…</div>}
 
       {employees !== null && employees.length === 0 && (
-        <div className="list-page__empty">
+        <div className="list-page__empty no-print">
           <p className="list-page__empty-title">{t("noEmployees")}</p>
           <p className="list-page__empty-hint">{t("noEmployeesHint")}</p>
           <Link to="/employees/new" className="btn btn--primary">
@@ -112,16 +118,18 @@ export default function EmployeeList() {
       )}
 
       {employees !== null && employees.length > 0 && filtered.length === 0 && (
-        <div className="list-page__empty">
+        <div className="list-page__empty no-print">
           <p className="list-page__empty-title">{t("noResults")}</p>
         </div>
       )}
 
-      <div className="list-page__grid">
+      <div className="list-page__grid no-print">
         {filtered.map((emp) => (
           <EmployeeCard key={emp.id} employee={emp} />
         ))}
       </div>
+
+      {employees !== null && <PrintDirectory employees={filtered} filterLabel={filterLabel} />}
     </div>
   );
 }

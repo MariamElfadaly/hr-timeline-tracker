@@ -14,7 +14,7 @@ import EarlyConfirm from "../components/EarlyConfirm";
 import ActiveEmployeeActions from "../components/ActiveEmployeeActions";
 import NotesEditor from "../components/NotesEditor";
 import DangerZone from "../components/DangerZone";
-import PrintHeader from "../components/PrintHeader";
+import EmployeePrintReport from "../components/EmployeePrintReport";
 import "./EmployeeProfile.css";
 
 export default function EmployeeProfile() {
@@ -51,8 +51,6 @@ export default function EmployeeProfile() {
 
   return (
     <div className="profile-page">
-      <PrintHeader employee={employee} />
-
       <div className="profile-page__toolbar no-print">
         <Link to="/" className="profile-page__back">
           ← {t("backToList")}
@@ -67,81 +65,83 @@ export default function EmployeeProfile() {
         </div>
       </div>
 
-      <div className="profile-page__header no-print">
-        <div>
-          <h1 className="profile-page__name">{employee.name}</h1>
-          <p className="profile-page__title">{employee.jobTitle}</p>
+      {/* Screen view — hidden entirely when printing */}
+      <div className="no-print">
+        <div className="profile-page__header">
+          <div>
+            <h1 className="profile-page__name">{employee.name}</h1>
+            <p className="profile-page__title">{employee.jobTitle}</p>
+          </div>
+          <StatusBadge status={status} />
         </div>
-        <StatusBadge status={status} />
-      </div>
 
-      <div className="profile-page__counter-card">
-        <EmployeeCounter joiningDate={employee.joiningDate} size="lg" />
-        <div className="profile-page__at">{t("atCompany")}</div>
-      </div>
+        <div className="profile-page__counter-card">
+          <EmployeeCounter joiningDate={employee.joiningDate} size="lg" />
+          <div className="profile-page__at">{t("atCompany")}</div>
+        </div>
 
-      {probation && status === "probation" && (
-        <div className="profile-page__probation-card">
-          <div className="profile-page__probation-row">
-            <span>{t("dayOf", { completed: probation.daysCompleted, total: probation.totalDays })}</span>
-            <span>{probation.daysRemaining} {t("daysRemaining")}</span>
-          </div>
-          <div className="profile-page__progress">
-            <div className="profile-page__progress-fill" style={{ width: `${probation.percent}%` }} />
-          </div>
-          {probation.daysRemaining <= 7 && (
-            <div className="profile-page__decide-soon">
-              {probation.daysRemaining === 0
-                ? t("reminderProbationDecideToday")
-                : t("reminderProbationDecideSoon", { days: probation.daysRemaining })}
+        {probation && status === "probation" && (
+          <div className="profile-page__probation-card">
+            <div className="profile-page__probation-row">
+              <span>{t("dayOf", { completed: probation.daysCompleted, total: probation.totalDays })}</span>
+              <span>{probation.daysRemaining} {t("daysRemaining")}</span>
             </div>
-          )}
-          <div className="no-print">
+            <div className="profile-page__progress">
+              <div className="profile-page__progress-fill" style={{ width: `${probation.percent}%` }} />
+            </div>
+            {probation.daysRemaining <= 7 && (
+              <div className="profile-page__decide-soon">
+                {probation.daysRemaining === 0
+                  ? t("reminderProbationDecideToday")
+                  : t("reminderProbationDecideSoon", { days: probation.daysRemaining })}
+              </div>
+            )}
             <EarlyConfirm employee={employee} onDecided={refetch} />
           </div>
+        )}
+
+        {status === "action_required" && (
+          <ProbationActionRequired employee={employee} onDecided={refetch} />
+        )}
+
+        {status === "active" && <ActiveEmployeeActions employee={employee} onChanged={refetch} />}
+
+        {employee.probation?.history?.length > 0 && (
+          <div className="profile-page__history">
+            <span className="profile-page__history-title">{t("probationHistory")}</span>
+            {employee.probation.history.map((h, i) => (
+              <div key={i} className="profile-page__history-row">
+                {t("extendedOn", { date: h.date, newDate: h.newEndDate })}
+                {h.note ? ` — ${h.note}` : ""}
+              </div>
+            ))}
+          </div>
+        )}
+
+        {status === "active" && employee.checklist && (
+          <PostProbationChecklist employee={employee} onChanged={refetch} />
+        )}
+
+        <EmployeeTimeline employee={employee} />
+
+        <CustomMilestones employee={employee} onChanged={refetch} />
+
+        <NotesEditor employee={employee} onChanged={refetch} />
+
+        <div className="profile-page__details">
+          <DetailRow label={t("employeeId")} value={employee.employeeId} />
+          <DetailRow label={t("joiningDate")} value={employee.joiningDate} />
+          <DetailRow label={t("phoneNumber")} value={employee.phoneNumber} />
+          {employee.department && <DetailRow label={t("department")} value={employee.department} />}
+          {employee.email && <DetailRow label={t("emailOptional")} value={employee.email} />}
+          {employee.manager && <DetailRow label={t("manager")} value={employee.manager} />}
         </div>
-      )}
 
-      {status === "action_required" && (
-        <ProbationActionRequired employee={employee} onDecided={refetch} />
-      )}
-
-      {status === "active" && <ActiveEmployeeActions employee={employee} onChanged={refetch} />}
-
-      {employee.probation?.history?.length > 0 && (
-        <div className="profile-page__history">
-          <span className="profile-page__history-title">{t("probationHistory")}</span>
-          {employee.probation.history.map((h, i) => (
-            <div key={i} className="profile-page__history-row">
-              {t("extendedOn", { date: h.date, newDate: h.newEndDate })}
-              {h.note ? ` — ${h.note}` : ""}
-            </div>
-          ))}
-        </div>
-      )}
-
-      {status === "active" && employee.checklist && (
-        <PostProbationChecklist employee={employee} onChanged={refetch} />
-      )}
-
-      <EmployeeTimeline employee={employee} />
-
-      <CustomMilestones employee={employee} onChanged={refetch} />
-
-      <NotesEditor employee={employee} onChanged={refetch} />
-
-      <div className="profile-page__details">
-        <DetailRow label={t("employeeId")} value={employee.employeeId} />
-        <DetailRow label={t("joiningDate")} value={employee.joiningDate} />
-        <DetailRow label={t("phoneNumber")} value={employee.phoneNumber} />
-        {employee.department && <DetailRow label={t("department")} value={employee.department} />}
-        {employee.email && <DetailRow label={t("emailOptional")} value={employee.email} />}
-        {employee.manager && <DetailRow label={t("manager")} value={employee.manager} />}
-      </div>
-
-      <div className="no-print">
         <DangerZone employee={employee} />
       </div>
+
+      {/* Print view — hidden on screen, shown only when printing */}
+      <EmployeePrintReport employee={employee} />
     </div>
   );
 }

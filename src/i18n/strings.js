@@ -139,8 +139,40 @@ export const strings = {
     noNotesYet: "No notes yet.",
 
     // Print report
-    printReportEyebrow: "Employee Record",
     printGeneratedOn: "Generated {date}",
+    printDirectoryEyebrow: "Employee Directory",
+    printDirectoryCount: "{count} employees",
+    printReportsEyebrow: "HR Reports",
+    printReportEyebrow2: "Employee status report",
+    printRef: "Ref. {id}-{year}",
+    printConfidential: "Confidential — internal HR use only",
+    printPersonalInfo: "Personal and job information",
+    printEmploymentStatus: "Employment status",
+    printStatusLabel: "Status",
+    confirmedOn: "Confirmed on",
+    printColItem: "Item",
+    printColStatus: "Status",
+    printColDetail: "Detail",
+    printColDate: "Date",
+    printColEvent: "Event",
+    printColMilestone: "Milestone",
+    printNotesLog: "Notes log",
+    printPreparedBy: "Prepared by: ______________________",
+    printPageOf: "Page 1 of 1",
+    printStatusDone: "Done",
+    printStatusNotRequired: "Not required",
+    printStatusPending: "Pending",
+    printNarrativeProbation:
+      "{name} has been with the company for {tenure}. They are currently in the probation period, on day {completed} of {total} ({remaining} days remaining, ending {endDate}). {decisionNote}",
+    printNarrativeNoDecision: "No decision has been recorded yet.",
+    printNarrativeReviewScheduled: "A review has been scheduled for {date}.",
+    printNarrativeActive:
+      "{name} has been with the company for {tenure}. Probation was completed and confirmed on {confirmedDate}. They are now an active employee.",
+    printNarrativeReviewScheduledFull:
+      "{name}'s probation ended and a review has been scheduled for {date} before a final decision is made.",
+    printNarrativeActionRequired: "{name}'s probation ended on {endDate} and a decision is still pending.",
+    printNarrativeEnded: "{name} was with the company for {tenure} before their employment ended on {endDate}.",
+    printNarrativeEndedReason: "Reason: {reason}.",
 
     // Phase 3: Custom milestones
     customMilestones: "Custom milestones",
@@ -352,8 +384,40 @@ export const strings = {
     noNotesYet: "لا توجد ملاحظات بعد.",
 
     // Print report
-    printReportEyebrow: "ملف الموظف",
     printGeneratedOn: "تم الإنشاء بتاريخ {date}",
+    printDirectoryEyebrow: "دليل الموظفين",
+    printDirectoryCount: "{count} موظف",
+    printReportsEyebrow: "تقارير الموارد البشرية",
+    printReportEyebrow2: "تقرير حالة الموظف",
+    printRef: "مرجع {id}-{year}",
+    printConfidential: "سري — للاستخدام الداخلي لقسم الموارد البشرية فقط",
+    printPersonalInfo: "المعلومات الشخصية والوظيفية",
+    printEmploymentStatus: "الحالة الوظيفية",
+    printStatusLabel: "الحالة",
+    confirmedOn: "تاريخ التثبيت",
+    printColItem: "البند",
+    printColStatus: "الحالة",
+    printColDetail: "التفاصيل",
+    printColDate: "التاريخ",
+    printColEvent: "الحدث",
+    printColMilestone: "الموعد",
+    printNotesLog: "سجل الملاحظات",
+    printPreparedBy: "أُعِد بواسطة: ______________________",
+    printPageOf: "صفحة 1 من 1",
+    printStatusDone: "مكتمل",
+    printStatusNotRequired: "غير مطلوب",
+    printStatusPending: "قيد الانتظار",
+    printNarrativeProbation:
+      "{name} في الشركة منذ {tenure}. وهو حاليًا في فترة الاختبار، اليوم {completed} من {total} (يتبقى {remaining} يوم، تنتهي في {endDate}). {decisionNote}",
+    printNarrativeNoDecision: "لم يتم تسجيل قرار بعد.",
+    printNarrativeReviewScheduled: "تمت جدولة مراجعة بتاريخ {date}.",
+    printNarrativeActive:
+      "{name} في الشركة منذ {tenure}. تم إكمال فترة الاختبار والتثبيت بتاريخ {confirmedDate}. وهو الآن موظف نشط.",
+    printNarrativeReviewScheduledFull:
+      "انتهت فترة اختبار {name} وتمت جدولة مراجعة بتاريخ {date} قبل اتخاذ القرار النهائي.",
+    printNarrativeActionRequired: "انتهت فترة اختبار {name} بتاريخ {endDate} ولا يزال القرار معلقًا.",
+    printNarrativeEnded: "كان {name} في الشركة لمدة {tenure} قبل انتهاء خدمته بتاريخ {endDate}.",
+    printNarrativeEndedReason: "السبب: {reason}.",
 
     // Phase 3: Custom milestones
     customMilestones: "مواعيد مخصصة",

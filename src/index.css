@@ -179,6 +179,50 @@ a {
   display: none;
 }
 
+.print-directory {
+  display: none;
+}
+
+.print-report {
+  display: none;
+}
+
+@media print {
+  .print-directory {
+    display: block !important;
+  }
+
+  .print-report {
+    display: block !important;
+  }
+
+  .print-directory__table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+  }
+
+  .print-directory__table th,
+  .print-directory__table td {
+    text-align: start;
+    padding: 8px 10px;
+    border-bottom: 1px solid #ccc;
+    color: #111;
+  }
+
+  .print-directory__table th {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #555;
+    border-bottom: 2px solid #111;
+  }
+
+  .print-directory__table tr {
+    break-inside: avoid;
+  }
+}
+
 @media print {
   @page {
     margin: 18mm 16mm;
@@ -230,15 +274,7 @@ a {
     margin-top: 6px;
   }
 
-  /* Flatten every card into a plain bordered section instead of dark UI */
-  .profile-page__counter-card,
-  .profile-page__probation-card,
-  .profile-page__history,
-  .checklist,
-  .etl,
-  .milestones,
-  .notes-editor,
-  .profile-page__details,
+  /* Flatten Reports page cards into plain bordered sections */
   .summary-stat,
   .insight-card,
   .reports-row {
@@ -255,7 +291,8 @@ a {
   .dept-bar__label,
   .dept-bar__count,
   .reports-section__title,
-  .reports-section__subtitle {
+  .reports-section__subtitle,
+  .reports-page__title {
     color: #111 !important;
   }
 
@@ -263,25 +300,8 @@ a {
     background: #999 !important;
   }
 
-  .counter__digits,
-  .profile-page__name,
-  .etl__title,
-  .checklist__title,
-  .milestones__title,
-  .notes-editor__title,
-  .profile-page__probation-row,
-  .detail-row__value,
-  .etl__label,
-  .checklist-item__toggle span,
-  .reports-page__title {
-    color: #111 !important;
-  }
-
   .profile-page__title,
-  .text-muted,
-  .detail-row__label,
-  .etl__date,
-  .checklist-item__note {
+  .text-muted {
     color: #555 !important;
   }
 
@@ -293,11 +313,6 @@ a {
     padding: 0 !important;
   }
 
-  input[type="checkbox"] {
-    width: 14px;
-    height: 14px;
-  }
-
   a {
     text-decoration: none !important;
     color: #111 !important;
@@ -307,5 +322,132 @@ a {
     border: 1px solid #999 !important;
     background: #fff !important;
     color: #111 !important;
+  }
+
+  /* Structured single-employee print report */
+  .pr-masthead {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    border-bottom: 3px double #1a1a1a;
+    padding-bottom: 12px;
+    margin-bottom: 4px;
+  }
+
+  .pr-eyebrow {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: #666;
+  }
+
+  .pr-name {
+    font-family: "Fraunces", "Cairo", serif;
+    font-size: 22px;
+    font-weight: 700;
+    margin-top: 2px;
+    color: #111;
+  }
+
+  .pr-ref {
+    text-align: end;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 10px;
+    color: #666;
+  }
+
+  .pr-confidential {
+    font-size: 11px;
+    color: #888;
+    margin-bottom: 20px;
+  }
+
+  .pr-section-title {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #666;
+    margin: 18px 0 6px;
+  }
+
+  .pr-narrative {
+    font-size: 13px;
+    line-height: 1.6;
+    margin: 0 0 10px;
+    color: #111;
+  }
+
+  .pr-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+    margin-bottom: 4px;
+  }
+
+  .pr-table th {
+    text-align: start;
+    padding: 6px 10px 6px 0;
+    font-size: 10px;
+    text-transform: uppercase;
+    color: #666;
+    border-bottom: 2px solid #1a1a1a;
+  }
+
+  .pr-table td {
+    padding: 6px 10px 6px 0;
+    border-bottom: 1px solid #eee;
+    color: #111;
+  }
+
+  .pr-table tr:last-child td {
+    border-bottom: none;
+  }
+
+  .pr-table--info td {
+    padding: 6px 0;
+  }
+
+  .pr-table--boxed td {
+    background: #f7f7f7;
+    border: 1px solid #ddd;
+    padding: 7px 10px;
+  }
+
+  .pr-label {
+    color: #666;
+    width: 22%;
+  }
+
+  .pr-strong {
+    font-weight: 700;
+  }
+
+  .pr-mono {
+    font-family: "IBM Plex Mono", monospace;
+  }
+
+  .pr-pending {
+    color: #a32d2d;
+    font-weight: 700;
+  }
+
+  .pr-notes-ts {
+    font-size: 11px;
+    white-space: nowrap;
+  }
+
+  .pr-table tr {
+    break-inside: avoid;
+  }
+
+  .pr-footer {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 32px;
+    padding-top: 16px;
+    border-top: 1px solid #ccc;
+    font-size: 11px;
+    color: #888;
   }
 }

@@ -4,6 +4,7 @@ import { useAuth } from "../contexts/AuthContext";
 import { useLanguage } from "../contexts/LanguageContext";
 import { subscribeToEmployees } from "../lib/employees";
 import { buildReportData } from "../lib/reports";
+import { todayISO } from "../lib/dateUtils";
 import "./Reports.css";
 
 export default function Reports() {
@@ -37,10 +38,17 @@ export default function Reports() {
 
   return (
     <div className="reports-page">
+      <div className="print-header">
+        <div className="print-header__eyebrow">{t("printReportsEyebrow")}</div>
+        <div className="print-header__name">{t("reports")}</div>
+        <div className="print-header__meta">{t("printDirectoryCount", { count: data.total })}</div>
+        <div className="print-header__generated">{t("printGeneratedOn", { date: todayISO() })}</div>
+      </div>
+
       <Link to="/" className="reports-page__back no-print">
         ← {t("backToList")}
       </Link>
-      <div className="reports-page__title-row">
+      <div className="reports-page__title-row no-print">
         <h1 className="reports-page__title">{t("reports")}</h1>
         <button className="btn btn--ghost no-print" onClick={() => window.print()}>
           {t("print")}
